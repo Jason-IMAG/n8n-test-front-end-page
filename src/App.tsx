@@ -39,7 +39,9 @@ function App() {
 
 	return (
 		<AxiosIntercetorProvider>
-			<RouterProvider router={createBrowserRouter(routes)} />
+			<RouterProvider router={createBrowserRouter(routes, {
+				basename: import.meta.env.BASE_URL,
+			})} />
 		</AxiosIntercetorProvider>
 	);
 }

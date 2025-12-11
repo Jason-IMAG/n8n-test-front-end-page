@@ -6,7 +6,7 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [tailwindcss(), react()],
-	base: '/n8n-test-front-end-page',
+	base: '/n8n-test-front-end-page/', // GitHub Pages 子路徑（需要結尾斜線）
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
