@@ -13,4 +13,16 @@ export namespace UserApi {
 	export function test() {
 		return apiClientInstance.post('/test');
 	}
+
+	export function uploadImage(file: File) {
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('filename', file.name);
+		
+		return apiClientInstance.post('/upload-image', formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+	}
 }

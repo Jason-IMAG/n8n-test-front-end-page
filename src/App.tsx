@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { AxiosIntercetorProvider } from '@/apps/api';
-
+import { MantineProvider } from '@mantine/core';
 import routes from './routes';
 
 function App() {
@@ -39,9 +39,13 @@ function App() {
 
 	return (
 		<AxiosIntercetorProvider>
-			<RouterProvider router={createBrowserRouter(routes, {
-				basename: import.meta.env.BASE_URL,
-			})} />
+			<MantineProvider>
+				<RouterProvider
+					router={createBrowserRouter(routes, {
+						basename: import.meta.env.BASE_URL,
+					})}
+				/>
+			</MantineProvider>
 		</AxiosIntercetorProvider>
 	);
 }
