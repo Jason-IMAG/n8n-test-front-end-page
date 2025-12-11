@@ -54,11 +54,18 @@ jobs:
           # 這裡可以覆蓋或補充環境變數
           VITE_APP_VERSION: ${{ github.sha }}
 
-      - name: Debug - Check built index.html
+      - name: Debug - Check built files
         run: |
+          echo "=== Checking if dist directory exists ==="
+          ls -la
+          echo ""
+          echo "=== Checking dist directory content ==="
+          ls -la dist/
+          echo ""
           echo "=== Checking dist/index.html content ==="
           cat dist/index.html
-          echo "=== End of index.html ==="
+          echo ""
+          echo "=== End of debug ==="
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
