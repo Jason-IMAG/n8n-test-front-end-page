@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 防止多個部署同時執行
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Copy environment config
+        run: |
+          # 從 build-config 複製對應分支的環境變數檔案
+          if [ -f "build-config/.env.${{ github.ref_name }}" ]; then
+            cp build-config/.env.${{ github.ref_name }} .env.production
+            echo "✅ 使用 build-config/.env.${{ github.ref_name }}"
+          else
+            echo "⚠️ 找不到 build-config/.env.${{ github.ref_name }}，將使用預設環境變數"
+          fi
+          
+          # 如果有需要替換敏感資訊，可以在這裡處理
+          # 例如：sed -i "s|__VITE_APP_API_URL__|${{ secrets.VITE_APP_API_URL }}|g" .env.production
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # 這裡可以覆蓋或補充環境變數
+          VITE_APP_VERSION: ${{ github.sha }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

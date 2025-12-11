@@ -21,4 +21,15 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment files
 .env
+.env.local
+.env.production
+.env.development
+
+# 允許 build-config 中的環境變數檔案被提交
+!build-config/.env.*
+
+# GitHub Actions output
+output
+build
