@@ -12,7 +12,7 @@ permissions:
 
 # 防止多個部署同時執行
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
           else
             echo "⚠️ 找不到 build-config/.env.${{ github.ref_name }}，將使用預設環境變數"
           fi
-          
+
           # 如果有需要替換敏感資訊，可以在這裡處理
           # 例如：sed -i "s|__VITE_APP_API_URL__|${{ secrets.VITE_APP_API_URL }}|g" .env.production
 
@@ -71,4 +71,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
