@@ -39,8 +39,20 @@ function ExamplePage() {
 			// 使用 UserApi 上傳圖片
 			const response = await UserApi.uploadImage(imageFile);
 
-			console.log('上傳成功:', response.data);
-			alert('圖片上傳成功！');
+			console.log('完整回應:', response);
+			console.log('回應資料:', response.data);
+			console.log('回應狀態:', response.status);
+
+			// 顯示詳細資訊
+			if (response.data) {
+				const message = response.data.message || '圖片上傳成功！';
+				const filename = response.data.filename || imageFile.name;
+				alert(`${message}\n檔案名稱: ${filename}`);
+				console.log('上傳成功 - 完整資料:', response.data);
+			} else {
+				alert('圖片上傳成功！（無回應資料）');
+				console.warn('警告：回應資料為空');
+			}
 
 			// 清空選擇
 			setImageFile(null);
