@@ -68,7 +68,7 @@ function ExamplePage() {
 	return (
 		<>
 			<div className={classes.examplePage}>
-				<span>Example Page</span>
+				<span>Example Page-test</span>
 				<img src={getAssetUrl('/images/vector.png')} />
 
 				{/* 圖片上傳區塊 */}
